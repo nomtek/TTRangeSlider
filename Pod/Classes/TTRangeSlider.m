@@ -351,13 +351,14 @@ static const CGFloat kLabelsFontSize = 12.0f;
         _selectedMaximum = self.maxValue;
     }
     
-    [self updateLabelValues];
     //update the frames in a transaction so that the tracking doesn't continue until the frame has moved.
     [CATransaction begin];
     [CATransaction setDisableActions:YES] ;
     [self updateHandlePositions];
     [self updateLabelPositions];
     [CATransaction commit];
+    
+    [self updateLabelValues];
 
     //update the delegate
     if (self.delegate && (self.leftHandleSelected || self.rightHandleSelected)){
