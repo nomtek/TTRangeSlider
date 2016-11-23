@@ -246,11 +246,12 @@ static const CGFloat kLabelsFontSize = 12.0f;
     float padding = self.labelPadding;
     float minSpacingBetweenLabels = 8.0f;
 
+    CGRect lineRect = self.sliderLine.frame;
     CGPoint leftHandleCentre = [self getCentreOfRect:self.leftHandle.frame];
-    CGPoint newMinLabelCenter = CGPointMake(leftHandleCentre.x, self.leftHandle.frame.origin.y - (self.minLabel.frame.size.height/2) - padding);
+    CGPoint newMinLabelCenter = CGPointMake(MAX(leftHandleCentre.x, CGRectGetMinX(lineRect) + CGRectGetWidth(self.minLabel.frame) / 2), self.leftHandle.frame.origin.y - (self.minLabel.frame.size.height/2) - padding);
 
     CGPoint rightHandleCentre = [self getCentreOfRect:self.rightHandle.frame];
-    CGPoint newMaxLabelCenter = CGPointMake(rightHandleCentre.x, self.rightHandle.frame.origin.y - (self.maxLabel.frame.size.height/2) - padding);
+    CGPoint newMaxLabelCenter = CGPointMake(MIN(rightHandleCentre.x, CGRectGetMaxX(lineRect) - CGRectGetWidth(self.maxLabel.frame) / 2), self.rightHandle.frame.origin.y - (self.maxLabel.frame.size.height/2) - padding);
 
     CGSize minLabelTextSize = self.minLabelTextSize;
     CGSize maxLabelTextSize = self.maxLabelTextSize;
@@ -349,14 +350,14 @@ static const CGFloat kLabelsFontSize = 12.0f;
     if (self.selectedMaximum > self.maxValue){
         _selectedMaximum = self.maxValue;
     }
-
+    
+    [self updateLabelValues];
     //update the frames in a transaction so that the tracking doesn't continue until the frame has moved.
     [CATransaction begin];
     [CATransaction setDisableActions:YES] ;
     [self updateHandlePositions];
     [self updateLabelPositions];
     [CATransaction commit];
-    [self updateLabelValues];
 
     //update the delegate
     if (self.delegate && (self.leftHandleSelected || self.rightHandleSelected)){
