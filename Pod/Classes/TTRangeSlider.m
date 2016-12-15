@@ -272,6 +272,19 @@ static const CGFloat kLabelsFontSize = 12.0f;
         float increaseAmount = minSpacingBetweenLabels - newSpacingBetweenTextLabels;
         newMinLabelCenter = CGPointMake(newMinLabelCenter.x - increaseAmount/2, newMinLabelCenter.y);
         newMaxLabelCenter = CGPointMake(newMaxLabelCenter.x + increaseAmount/2, newMaxLabelCenter.y);
+        
+        if (newMinLabelCenter.x < CGRectGetMinX(lineRect) + CGRectGetWidth(self.minLabel.frame) / 2) {
+            // Labels need to be moved right.
+            CGFloat offset = CGRectGetMinX(lineRect) + CGRectGetWidth(self.minLabel.frame) / 2 - newMinLabelCenter.x;
+            newMinLabelCenter.x += offset;
+            newMaxLabelCenter.x += offset;
+        } else if (newMaxLabelCenter.y > CGRectGetMaxX(lineRect) - CGRectGetWidth(self.maxLabel.frame) / 2) {
+            // Labels need to be moved left.
+            CGFloat offset = newMaxLabelCenter.y - CGRectGetMaxX(lineRect) + CGRectGetWidth(self.maxLabel.frame) / 2;
+            newMinLabelCenter.x -= offset;
+            newMaxLabelCenter.x -= offset;
+        }
+        
         self.minLabel.position = newMinLabelCenter;
         self.maxLabel.position = newMaxLabelCenter;
 
