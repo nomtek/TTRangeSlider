@@ -278,9 +278,9 @@ static const CGFloat kLabelsFontSize = 12.0f;
             CGFloat offset = CGRectGetMinX(lineRect) + CGRectGetWidth(self.minLabel.frame) / 2 - newMinLabelCenter.x;
             newMinLabelCenter.x += offset;
             newMaxLabelCenter.x += offset;
-        } else if (newMaxLabelCenter.y > CGRectGetMaxX(lineRect) - CGRectGetWidth(self.maxLabel.frame) / 2) {
+        } else if (newMaxLabelCenter.x > CGRectGetMaxX(lineRect) - CGRectGetWidth(self.maxLabel.frame) / 2) {
             // Labels need to be moved left.
-            CGFloat offset = newMaxLabelCenter.y - CGRectGetMaxX(lineRect) + CGRectGetWidth(self.maxLabel.frame) / 2;
+            CGFloat offset = newMaxLabelCenter.x - CGRectGetMaxX(lineRect) + CGRectGetWidth(self.maxLabel.frame) / 2;
             newMinLabelCenter.x -= offset;
             newMaxLabelCenter.x -= offset;
         }
