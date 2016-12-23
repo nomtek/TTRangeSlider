@@ -415,6 +415,14 @@ static const CGFloat kLabelsFontSize = 12.0f;
 }
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    [self handleEndingTouches];
+}
+
+- (void)cancelTrackingWithEvent:(UIEvent *)event {
+    [self handleEndingTouches];
+}
+
+- (void)handleEndingTouches {
     if (self.leftHandleSelected){
         self.leftHandleSelected = NO;
         [self animateHandle:self.leftHandle withSelection:NO];
